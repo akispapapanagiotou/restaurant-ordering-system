@@ -128,3 +128,12 @@ def take_order():
 
     return order
 
+
+def calculate_total_cost(order):
+    total_cost = 0
+    for item in order:
+        dish = item[0]
+        quantity = item[1]
+        price = restaurant_menu[dish-1]['price']
+        total_cost += quantity * price
+    return total_cost
