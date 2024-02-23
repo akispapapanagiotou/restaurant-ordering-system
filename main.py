@@ -1,62 +1,63 @@
+import datetime
+
 restaurant_menu = [
     {
         "dish": "Classic Cheeseburger",
-        "description": "Juicy beef patty with melted cheese, lettuce, tomato, and pickles on a sesame seed bun",
+        "description": "Beef patty, cheese, lettuce, tomato, pickles, sesame seed bun",
         "price": 9.99,
         "quantity": 50
     },
     {
         "dish": "Vegetarian Pad Thai",
-        "description": "Stir-fried rice noodles with tofu, bean sprouts, peanuts, and tamarind sauce",
+        "description": "Rice noodles, tofu, bean sprouts, peanuts, tamarind sauce",
         "price": 12.99,
         "quantity": 30
     },
     {
         "dish": "Grilled Salmon",
-        "description": "Fresh Atlantic salmon fillet grilled to perfection and served with steamed vegetables",
+        "description": "Atlantic salmon, steamed vegetables",
         "price": 17.99,
         "quantity": 20
     },
     {
         "dish": "Mushroom Risotto",
-        "description": "Creamy Arborio rice cooked with mushrooms, garlic, and Parmesan cheese",
+        "description": "Arborio rice, mushrooms, garlic, Parmesan cheese",
         "price": 14.99,
         "quantity": 25
     },
     {
         "dish": "Tiramisu",
-        "description": "Classic Italian dessert made with layers of coffee-soaked ladyfingers and mascarpone cheese",
+        "description": "Coffee-soaked ladyfingers, mascarpone cheese",
         "price": 6.99,
         "quantity": 40
     },
     {
         "dish": "Mediterranean Grilled Chicken Salad",
-        "description": "Grilled chicken salad with mixed greens, cherry tomatoes, feta cheese, olives, and "
-                       "lemon vinaigrette.",
+        "description": "Grilled chicken, mixed greens, cherry tomatoes, feta cheese, olives",
         "price": 12.99,
         "quantity": 25
     },
     {
         "dish": "Spaghetti Carbonara",
-        "description": "Pasta with bacon, eggs, Parmesan cheese, and black pepper.",
+        "description": "Pasta, bacon, eggs, Parmesan cheese, black pepper",
         "price": 14.99,
         "quantity": 20
     },
     {
         "dish": "Thai Basil Beef Stir-Fry",
-        "description": "Beef stir-fry with Thai basil, bell peppers, onions, and garlic.",
+        "description": "Beef, Thai basil, bell peppers, onions, garlic",
         "price": 15.99,
         "quantity": 18
     },
     {
         "dish": "Vegetarian Chickpea Curry",
-        "description": "Chickpea curry with tomatoes, onions, garlic, and Indian spices.",
+        "description": "Chickpea curry, tomatoes, onions, Indian spices",
         "price": 13.99,
         "quantity": 22
     },
     {
         "dish": "BBQ Pulled Pork Sandwich",
-        "description": "Pulled pork sandwich with barbecue sauce, coleslaw, and pickles.",
+        "description": "Pulled pork, barbecue sauce, coleslaw, pickles",
         "price": 11.99,
         "quantity": 30
     }
@@ -64,24 +65,24 @@ restaurant_menu = [
 
 
 def greeting():
-    greeting_message = ("\nWelcome to SavorSquare Bistro!\nWe're delighted to have you dine with us today. Our team is "
-                        "here to ensure you have a fantastic culinary experience.\nPlease feel free to ask any "
-                        "questions or let us know how we can make your visit memorable.\nBon appétit!\n")
+    greeting_message = ("\nWelcome to SavorSquare Bistro! Join us for a memorable dining experience where our team"
+                        "\nis dedicated to exceeding your expectations. We're here to make your visit special, so"
+                        "\ndon't hesitate to ask us anything. Enjoy your meal!\n")
     print(greeting_message)
 
 
 def print_menu():
-    lines = "--------------------------------------------------------------------------------------------------------"
+    lines = "-" * 90
     print(lines)
-    print("------------------------------------------------- MENU -------------------------------------------------")
+    print(" " * 35 + "SavorSquare Bistro")
+    print(" " * 42 + "Menu")
     print(lines)
     for item in restaurant_menu:
         print(f"Dish: {item['dish']}")
         print(f"Description: {item['description']}")
         print(f"Price: ${item['price']}")
         print(lines)
-    print(lines)
-    print(lines)
+    print("")
 
 
 def take_order():
@@ -137,3 +138,41 @@ def calculate_total_cost(order):
         price = restaurant_menu[dish-1]['price']
         total_cost += quantity * price
     return total_cost
+
+
+def print_receipt(order):
+    lines = "-" * 90
+    print(lines)
+    print(" " * 35 + "SavorSquare Bistro")
+    print(" " * 41 + "Receipt")
+    print(lines)
+    current_datetime = datetime.datetime.now()
+    print(f"Date: {current_datetime.strftime("%d/%m/%y")}")
+    print(f"Time: {current_datetime.strftime("%H:%M:%S")}")
+    print(lines)
+
+    print("Dish" + " " * 35 + "Quantity" + " " * 20 + "Price")
+    print(lines)
+    for item in order:
+        dish = item[0]
+        servings = item[1]
+        dish_name = restaurant_menu[dish-1]['dish']
+        price = restaurant_menu[dish-1]['price']
+        cost = servings * price
+        print(f"{dish_name}{' ' * (40 - len(dish_name))}"
+              f"{servings}{' ' * (27 - len(str(servings)))}"
+              f"{cost:.2f}")
+    print(lines)
+
+    print(f"Total cost: {str(calculate_total_cost(order))}€\n")
+    print("Thank you for dining with us!")
+
+
+def main():
+    greeting()
+    print_menu()
+    my_order = take_order()
+    print_receipt(my_order)
+
+
+main()
