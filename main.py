@@ -4,7 +4,7 @@ restaurant_menu = [
         "description": "Juicy beef patty with melted cheese, lettuce, tomato, and pickles on a sesame seed bun",
         "price": 9.99,
         "quantity": 50
-     },
+    },
     {
         "dish": "Vegetarian Pad Thai",
         "description": "Stir-fried rice noodles with tofu, bean sprouts, peanuts, and tamarind sauce",
@@ -75,12 +75,56 @@ def print_menu():
     print(lines)
     print("------------------------------------------------- MENU -------------------------------------------------")
     print(lines)
-
     for item in restaurant_menu:
         print(f"Dish: {item['dish']}")
         print(f"Description: {item['description']}")
         print(f"Price: ${item['price']}")
         print(lines)
+    print(lines)
+    print(lines)
 
-    print(lines)
-    print(lines)
+
+def take_order():
+    order = []
+
+    while True:
+
+        # ask for dish choice
+        while True:
+            try:
+                dish_choice = int(input("Which dish would you like to order? "
+                                        "(Enter dish number 1-10)\n"))
+                if 1 <= dish_choice <= 10:
+                    break
+                else:
+                    print("Invalid dish choice!")
+            except ValueError:
+                print("Invalid dish choice!")
+
+        if dish_choice == 0:
+            break
+
+        dish_name = restaurant_menu[dish_choice - 1]['dish']
+        available_quantity = restaurant_menu[dish_choice - 1]['quantity']
+
+        # ask for quantity choice
+        while True:
+            try:
+                quantity_choice = int(input(f"How many servings of {dish_name} would you like to order? "
+                                            f"(Choose 1-{available_quantity})\n"))
+                if 1 <= quantity_choice <= available_quantity:
+                    break
+                else:
+                    print("Invalid quantity choice!")
+            except ValueError:
+                print("Invalid quantity choice!")
+
+        print(f"You have ordered {quantity_choice} serving(s) of {dish_name}.")
+        order.append([dish_choice, quantity_choice])
+
+        continue_order = input("Would you like to order something else? (yes/no)\n")
+        if continue_order.lower() != 'yes':
+            break
+
+    return order
+
